@@ -9,26 +9,19 @@
 3. 변수
 - 스택 list[]
 '''
+
 def solution(s):
-        
+    
     # 1. 스택 초기화
     stack = []
-    idx = 0
     
-    # 1-1. 첫 괄호가 닫힘이라면 False 열림이라면 계속 진행 -> 이렇게 처리해 버리면, 반복문으로 뒤에서 처리 불가능! 
-    '''if s[idx] == ")":
-        return False
-    elif s[idx] == "(":
-        stack.append(s[idx])
-        idx += 1'''
-        
-    # 2. 스택에서 한 쌍의 괄호 찾기 
-    while idx < len(s):
-        if s[idx] == ")" and stack[-1:] == ["("]: # 열림-닫힘 쌍이 맞을 때,
+    # 2. 괄호 스택에 추가
+    for char in s:
+        if char == "(":
+            stack.append(char)
+        else:  # char == ")"
+            if not stack:
+                return False
             stack.pop()
-        else:
-            stack.append(s[idx])
-        idx += 1
-        
-    # 3. 스택이 비어있지 않으면 False 비어있다면 True
-    return False if stack else True
+            
+    return not stack
