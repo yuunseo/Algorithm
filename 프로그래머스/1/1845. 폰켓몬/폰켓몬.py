@@ -7,16 +7,8 @@
     - nums에서 중복을 제거한 후, 내가 고를 수 있는 개수보다 많다면 다 다른 걸 고를 수 있음 -> 이게 최대
     - 중복 제거 후, 내가 고를 수 있는 개수보다 적다면 남은 폰켓몬의 종류의 개수가 최대 종류의 개수
 '''
-from itertools import combinations
 
-def solution(nums):
+def solution(nums):    
     
-    cnt = len(nums)//2 # cnt개를 고를 거야
-    
-    nums_set = list(set(nums))
-    
-    if len(nums_set) >= cnt:
-        return cnt
-    else:
-        return len(nums_set)
+    return min(len(nums)//2, len(set(nums)))
     
