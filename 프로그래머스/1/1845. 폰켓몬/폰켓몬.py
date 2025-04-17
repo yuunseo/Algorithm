@@ -1,0 +1,22 @@
+'''
+1. 아이디어
+    - 폰켄몬의 종류 번호가 최대한 다른 조합을 선택해야 한다 (N/2개)
+    - nums 중 서로 다른 숫자 N/2개를 선택한다 -> 조합combination
+    - 조합들 중, 각각의 원소가 서로 다른 숫자들을 가져야 함. -> set() 한 결과 중 젤 큰 수 반환 >>> 시간초과
+    
+    - nums에서 중복을 제거한 후, 내가 고를 수 있는 개수보다 많다면 다 다른 걸 고를 수 있음 -> 이게 최대
+    - 중복 제거 후, 내가 고를 수 있는 개수보다 적다면 남은 폰켓몬의 종류의 개수가 최대 종류의 개수
+'''
+from itertools import combinations
+
+def solution(nums):
+    
+    cnt = len(nums)//2 # cnt개를 고를 거야
+    
+    nums_set = list(set(nums))
+    
+    if len(nums_set) >= cnt:
+        return cnt
+    else:
+        return len(nums_set)
+    
