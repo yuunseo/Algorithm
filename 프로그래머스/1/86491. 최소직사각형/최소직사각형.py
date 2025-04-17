@@ -13,4 +13,4 @@ def solution(sizes):
     width_sizes = [max(size) for size in sizes]
     length_sizes = [min(size) for size in sizes]
     
-    return sorted(width_sizes)[-1] * sorted(length_sizes)[-1]
+    return max(width_sizes) * max(length_sizes)
