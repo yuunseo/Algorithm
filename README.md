@@ -13,4 +13,13 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 | ------- |
 | [0125-valid-palindrome](https://github.com/yuunseo/Algorithm/tree/master/0125-valid-palindrome) |
 | [0344-reverse-string](https://github.com/yuunseo/Algorithm/tree/master/0344-reverse-string) |
+| [0974-reorder-data-in-log-files](https://github.com/yuunseo/Algorithm/tree/master/0974-reorder-data-in-log-files) |
+## Array
+|  |
+| ------- |
+| [0974-reorder-data-in-log-files](https://github.com/yuunseo/Algorithm/tree/master/0974-reorder-data-in-log-files) |
+## Sorting
+|  |
+| ------- |
+| [0974-reorder-data-in-log-files](https://github.com/yuunseo/Algorithm/tree/master/0974-reorder-data-in-log-files) |
 <!---LeetCode Topics End-->
