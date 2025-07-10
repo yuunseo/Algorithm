@@ -1,5 +1,5 @@
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main{
     
@@ -12,12 +12,7 @@ public class Main{
         N = Integer.parseInt(list1[0]); X = Integer.parseInt(list1[1]);
         
         String[] list2 = scanner.nextLine().split(" ");
-                
-        for(int i=0; i<N; i++){
-            if(Integer.parseInt(list2[i]) < X){ // 문자열이지만, 아스키코드로 크기 비교 가능
-                System.out.print(list2[i]+" ");
-            }
-        }
+		Arrays.stream(list2).map(Integer::parseInt).filter(n -> n<X).forEach(n->System.out.print(n+" "));
         
         
         
