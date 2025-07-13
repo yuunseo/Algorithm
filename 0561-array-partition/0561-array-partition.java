@@ -6,7 +6,7 @@ class Solution {
 
         int result = 0;
         for(int i=0; i<nums.length-1; i+=2){
-            result += Math.min(nums[i],nums[i+1]);
+            result += nums[i];
         }
     
         return result;
