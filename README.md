@@ -7,6 +7,7 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 |  |
 | ------- |
 | [0005-longest-palindromic-substring](https://github.com/yuunseo/Algorithm/tree/master/0005-longest-palindromic-substring) |
+| [0042-trapping-rain-water](https://github.com/yuunseo/Algorithm/tree/master/0042-trapping-rain-water) |
 | [0125-valid-palindrome](https://github.com/yuunseo/Algorithm/tree/master/0125-valid-palindrome) |
 | [0344-reverse-string](https://github.com/yuunseo/Algorithm/tree/master/0344-reverse-string) |
 ## String
@@ -22,6 +23,7 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 |  |
 | ------- |
 | [0001-two-sum](https://github.com/yuunseo/Algorithm/tree/master/0001-two-sum) |
+| [0042-trapping-rain-water](https://github.com/yuunseo/Algorithm/tree/master/0042-trapping-rain-water) |
 | [0049-group-anagrams](https://github.com/yuunseo/Algorithm/tree/master/0049-group-anagrams) |
 | [0837-most-common-word](https://github.com/yuunseo/Algorithm/tree/master/0837-most-common-word) |
 | [0974-reorder-data-in-log-files](https://github.com/yuunseo/Algorithm/tree/master/0974-reorder-data-in-log-files) |
@@ -44,4 +46,13 @@ This is an auto push repository for Baekjoon Online Judge created with [Baekjoon
 |  |
 | ------- |
 | [0005-longest-palindromic-substring](https://github.com/yuunseo/Algorithm/tree/master/0005-longest-palindromic-substring) |
+| [0042-trapping-rain-water](https://github.com/yuunseo/Algorithm/tree/master/0042-trapping-rain-water) |
+## Stack
+|  |
+| ------- |
+| [0042-trapping-rain-water](https://github.com/yuunseo/Algorithm/tree/master/0042-trapping-rain-water) |
+## Monotonic Stack
+|  |
+| ------- |
+| [0042-trapping-rain-water](https://github.com/yuunseo/Algorithm/tree/master/0042-trapping-rain-water) |
 <!---LeetCode Topics End-->
