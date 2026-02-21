@@ -1,0 +1,11 @@
+
+/*
+1. name의 count가 2이상인 name과 해당 count 조회하기
+2. isnotnull
+3. name asc
+
+*/
+SELECT NAME, COUNT(NAME) AS COUNT
+FROM ANIMAL_INS
+GROUP BY NAME HAVING COUNT(NAME) >= 2
+ORDER BY NAME ASC;
