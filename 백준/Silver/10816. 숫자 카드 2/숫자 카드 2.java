@@ -1,36 +1,29 @@
-/*
-<아이디어>
-1. 상근이가 가진 N개의 숫자 카드 중에서 정수 M개를 주었을 때 N개 중에서 몇 개를 가지고 있나?
-2. 상근이의 지갑 vs 나의 지갑 -> 나의 지갑 중에서 상근이가 가진 개수를 배열에 넣어서 반환하기
-3. for 나의 지갑에서 1개씩 가져오기 > 상근이가 가진 것 중에서 몇 개 있는지 개수 뽑기
-4. 상근이가 가진 카드는 검색해야 하니까 arraylist말고 hashmap?
-5. 내가 가진 카드는 하나씩 조회만 하면 되니까 그냥 list도 가능
-
-*/
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class Main {
-    public static void main(String[] args) throws Exception {
+class Main{
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-
-        int N = Integer.parseInt(br.readLine().trim());
-        Map<Integer, Integer> sangeun = new HashMap<>((int)(N / 0.75f) + 1);
-
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
-            int x = Integer.parseInt(st.nextToken());
-            sangeun.put(x, sangeun.getOrDefault(x, 0) + 1);
-        }
-
-        int M = Integer.parseInt(br.readLine().trim());
+        StringTokenizer st;
+        
+        int N = Integer.parseInt(br.readLine());
+        Map<Integer,Integer> arr = new HashMap<>();
+        
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < M; i++) {
-            int y = Integer.parseInt(st.nextToken());
-            sb.append(sangeun.getOrDefault(y, 0)).append(' ');
+        for(int i=0; i<N; i++){
+            int num = Integer.parseInt(st.nextToken());
+            arr.put(num, arr.getOrDefault(num,0)+1);
         }
-
-        System.out.print(sb.toString());
+        
+        int M = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<M; i++){
+            int num = Integer.parseInt(st.nextToken());
+            sb.append(arr.getOrDefault(num,0)).append(" ");
+        }
+        
+        System.out.println(sb.toString().trim());
+        
     }
 }
