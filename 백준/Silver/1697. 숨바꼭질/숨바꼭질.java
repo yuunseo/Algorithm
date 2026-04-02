@@ -14,39 +14,33 @@ class Main {
 
         int N = Integer.parseInt(st.nextToken()); // 수빈이 위치
         int K = Integer.parseInt(st.nextToken()); // 동생 위치
-        int cnt = 0;
 
-        Queue<int[]> pos = new LinkedList<>(); // 최소 시간 구하기 위한 큐
-        boolean[] visited = new boolean[100001];
-        pos.offer(new int[] {N,0});
+        boolean[] visited = new boolean[100001]; // 방문 배열
+        int[] dist = new int[100001]; // 거리 배열
+        
+        Queue<Integer> pos = new LinkedList<>(); // 최소 시간 구하기 위한 큐
+        pos.offer(N);
         visited[N] = true;
+        dist[N] = 0;
 
         while(!pos.isEmpty()){
-            int[] cur = pos.poll();
-            int x = cur[0];
-            int dist = cur[1];
+            int x = pos.poll();
 
             if(x == K){
-                System.out.println(dist);
+                System.out.println(dist[x]);
                 return;
             }
-
-            if(0<= 2*x && 2*x <= 100000 && !visited[2*x]){
-                pos.offer(new int[] {2*x, dist+1});
-                visited[2*x] = true;    
+            
+            int[] next = {x*2, x-1, x+1};
+            
+            for(int nx : next){
+                if(nx<0 || nx>100000) continue;
+                if(visited[nx]) continue;
+                
+                visited[nx] = true;
+                dist[nx] = dist[x]+1;
+                pos.offer(nx);
             }
-            if(0<=x-1 && x-1 <= 100000 && !visited[x-1]){
-                pos.offer(new int[] {x-1, dist+1});
-                visited[x-1] = true;
-            }
-
-            if(0<=x+1 && x+1<=100000 && !visited[x+1]){
-                pos.offer(new int[] {x+1, dist+1});
-                visited[x+1] = true;
-            }
-
         }
-
-
     }
 }
