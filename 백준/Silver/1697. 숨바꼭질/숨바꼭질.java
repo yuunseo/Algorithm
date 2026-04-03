@@ -1,46 +1,45 @@
-/*
-수빈이 위치 -> 동생 위치 최단 시간 구하기
-걷거나 순간이동하는데 거리는 시간은 1초
-BFS로 큐에 삽입하면서 가기 -> 좌표+시간
-*/
-
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-class Main {
+public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st;
 
-        int N = Integer.parseInt(st.nextToken()); // 수빈이 위치
-        int K = Integer.parseInt(st.nextToken()); // 동생 위치
-
-        boolean[] visited = new boolean[100001]; // 방문 배열
-        int[] dist = new int[100001]; // 거리 배열
+        st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+       
+        // 이동을 위한 방법
+        int[] dx = {-1,1,2};
         
-        Queue<Integer> pos = new LinkedList<>(); // 최소 시간 구하기 위한 큐
-        pos.offer(N);
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[] {N,0}); // {시작점, 이동시간}
+        boolean[] visited = new boolean[100001];
         visited[N] = true;
-        dist[N] = 0;
-
-        while(!pos.isEmpty()){
-            int x = pos.poll();
-
-            if(x == K){
-                System.out.println(dist[x]);
+        
+        while(!q.isEmpty()){
+            int[] cur = q.poll();
+            int x = cur[0];
+            int time = cur[1];
+            
+            if(x==K){
+                System.out.println(time);
                 return;
             }
             
-            int[] next = {x*2, x-1, x+1};
-            
-            for(int nx : next){
+            // 이동 방법
+            int[] next = {x-1, x+1, 2*x};
+            for(int d=0; d<3; d++){
+                int nx = next[d];
                 if(nx<0 || nx>100000) continue;
                 if(visited[nx]) continue;
-                
+                q.add(new int[] {nx,time+1});
                 visited[nx] = true;
-                dist[nx] = dist[x]+1;
-                pos.offer(nx);
             }
+            
+            
         }
+
     }
 }
