@@ -1,56 +1,65 @@
-/*
-1번노드에서 출발했을 때, 거리배열을 갱신하고
-가장 긴 거리를 갱신하며 출력하기
-*/
 import java.util.*;
 
 class Solution {
+    static ArrayList<Integer> [] arr;
+    static int maxVal = 0;
+    static boolean[] visited;
+    static int[] count;
+    
     public int solution(int n, int[][] edge) {
         
-        List<Integer>[] graph = new ArrayList[n+1];
+        // input
+        int edge_count = edge.length;
+        arr = new ArrayList[n+1];
         for(int i=1; i<=n; i++){
-            graph[i] = new ArrayList<>();
+            arr[i] = new ArrayList<>();
         }
         
-        for(int i=0; i<edge.length; i++){
-            int s = edge[i][0];
-            int e = edge[i][1];
+        // 노드의 간선 배열
+        for(int[] vertex: edge){ 
+            int a = vertex[0];
+            int b = vertex[1];
             
-            graph[s].add(e);
-            graph[e].add(s);
+            arr[a].add(b);
+            arr[b].add(a);
         }
         
-        int[] dist = new int[n+1];
-        boolean[] visited = new boolean[n+1];
+        // 각 노드까지의 간선의 개수 저장 배열
+        count = new int[n+1];
         
-        Queue<Integer> q = new LinkedList<>();
-        q.add(1);
+        // 최단거리 bfs
+        visited = new boolean[n+1];
         visited[1] = true;
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[] {1, 0});
         
         while(!q.isEmpty()){
-            int cur = q.poll();
+            int[] cur = q.poll();
+            int node = cur[0];
+            int total = cur[1];
+            count[node] = total;
             
-            for(int next : graph[cur]){
+            for(int next: arr[cur[0]]){
                 if(!visited[next]){
                     visited[next] = true;
-                    dist[next] = dist[cur] + 1;
-                    q.add(next);
+                    q.add(new int[] {next, total+1});
                 }
             }
+            
         }
         
-        int max = 0;
-        for(int i=1; i<=n; i++){
-            max = Math.max(max, dist[i]);
+        for(int num: count){
+            maxVal = Math.max(maxVal, num);
         }
         
-        int count = 0;
-        for(int i=1; i<=n; i++){
-            if(dist[i] == max){
-                count++;
+        int answer = 0;
+        for(int num: count){
+            if(num == maxVal){
+                answer++;
             }
         }
         
-        return count;
+        return answer;  
+        
     }
 }
