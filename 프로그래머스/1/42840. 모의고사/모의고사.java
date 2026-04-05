@@ -1,60 +1,50 @@
-/*
-- 가장 높은 점수인 사람을 배열로 반환하기 & 동점이면 오름차순 정렬
-- 총 10,000문제이므로, 모든 문제를 각각 비교해 보아도 O(N) 가능
-*/
 import java.util.*;
 
 class Solution {
     public int[] solution(int[] answers) {
-        
-        // 1. 각 학생들의 답안지 문자열 생성 (길이는 10,000)
-        String std_1 = "12345".repeat(10000/5);
-        String std_2 = "21232425".repeat(10000/8);
-        String std_3 = "3311224455".repeat(10000/10);
-        
-        // 2. answer에 든 배열을 가지고 반복하면서 맞는 답안의 개수 카운드
-        int cnt_1 = 0;
-        int cnt_2 = 0;
-        int cnt_3 = 0;
-        int max = 0;
-        for(int i=0; i<answers.length; i++){
-            if(std_1.charAt(i) == (char)(answers[i]+'0')){
-                cnt_1++;
-                if(max<cnt_1){
-                    max = cnt_1;
-                }
-            }
-            if(std_2.charAt(i) == (char)(answers[i]+'0')){
-                cnt_2++;
-                if(max<cnt_2){
-                    max = cnt_2;
-                }
-            }
-            if (std_3.charAt(i) == (char)(answers[i]+'0')){
-                cnt_3++;
-                if(max<cnt_3){
-                    max = cnt_3;
-                }
-            }
-            
-            
-        }
-        System.out.println(max);
-        // 3. 최댓값인 학생들을 모아서 반환
-        List<Integer> list = new ArrayList<Integer>();
-        if(cnt_1 == max){
-            list.add(1);
-        }
-        if(cnt_2 == max){
-            list.add(2);
-        }
-        if(cnt_3 == max){
-            list.add(3);
+        int n = answers.length; // 시험 문제 수
+        int[] scores = new int[4]; // 학생 점수 초기화
+        for(int i=1; i<=3; i++){
+            scores[i] = 0;
         }
         
-        int[] answer = new int[list.size()];
-        for(int i=0; i<list.size(); i++){
-            answer[i] = list.get(i);
+        ArrayList<Integer>[] std = new ArrayList[4];
+        for(int i=1; i<=3; i++){
+            std[i] = new ArrayList<>();
+        }
+        std[1].add(1); std[1].add(2); std[1].add(3); std[1].add(4); std[1].add(5);
+        std[2].add(2); std[2].add(1);
+        std[2].add(2); std[2].add(3);
+        std[2].add(2); std[2].add(4);
+        std[2].add(2); std[2].add(5);
+        std[3].add(3); std[3].add(3);
+        std[3].add(1); std[3].add(1);
+        std[3].add(2); std[3].add(2);
+        std[3].add(4); std[3].add(4);
+        std[3].add(5); std[3].add(5);
+        
+        
+        for(int i=1; i<=3; i++){
+            for(int j=0; j<n; j++){
+                int num = std[i].get(j%(std[i].size()));
+                if(num == answers[j]) scores[i] += 1;
+            }
+        }
+        
+        
+        int maxVal = -1;
+        for(int i=1; i<4; i++){
+            maxVal = Math.max(maxVal, scores[i]);
+        }
+        
+        List<Integer> result = new ArrayList<>();
+        for(int i=1; i<4; i++){
+            if(scores[i] == maxVal) result.add(i);
+        }
+        
+        int[] answer = new int[result.size()];
+        for(int i=0; i<result.size(); i++){
+            answer[i] = result.get(i);
         }
         
         return answer;
