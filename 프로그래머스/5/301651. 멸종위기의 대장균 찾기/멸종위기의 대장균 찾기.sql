@@ -1,24 +1,30 @@
-WITH RECURSIVE GEN AS (
-    -- INIT
-    SELECT ID, PARENT_ID, 1 AS GENERATION
-    FROM ECOLI_DATA
-    WHERE PARENT_ID IS NULL
+WITH RECURSIVE ecoli AS (
+    -- 1세대
+    SELECT 
+        id,
+        parent_id,
+        1 AS generation
+    FROM ecoli_data
+    WHERE parent_id IS NULL
     
     UNION ALL
     
-    -- NEXT
-    SELECT C.ID, C.PARENT_ID, G.GENERATION + 1
-    FROM ECOLI_DATA C
-    JOIN GEN G
-        ON C.PARENT_ID = G.ID
+    -- 다음 세대
+    SELECT 
+        c.id,
+        c.parent_id,
+        p.generation + 1
+    FROM ecoli_data c
+    JOIN ecoli p
+        ON c.parent_id = p.id 
 )
 
-SELECT COUNT(*) AS COUNT, GENERATION
-FROM GEN G
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM ECOLI_DATA C
-    WHERE C.PARENT_ID = G.ID
-    )
-GROUP BY GENERATION
-ORDER BY GENERATION;
+SELECT COUNT(*) AS COUNT, generation
+FROM ecoli
+WHERE id NOT IN (
+    SELECT parent_id 
+    FROM ecoli_data 
+    WHERE parent_id IS NOT NULL
+)
+GROUP BY generation
+ORDER BY generation ASC;
