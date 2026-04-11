@@ -1,34 +1,29 @@
 public class Main {
-
     public static void main(String[] args) {
+
         boolean[] check = new boolean[10001];
+        StringBuilder sb = new StringBuilder();
 
-        // 1부터 10000까지 생성자 계산
         for (int i = 1; i <= 10000; i++) {
-            int num = d(i);
+            int sum = i;
 
-            if (num <= 10000) {
-                check[num] = true;
+            // 생성자 계산 (함수 제거)
+            for (int x = i; x > 0; x /= 10) {
+                sum += x % 10;
+            }
+
+            if (sum <= 10000) {
+                check[sum] = true;
             }
         }
 
-        // 생성되지 않은 수(셀프 넘버) 출력
+        // 결과 출력 (StringBuilder 사용)
         for (int i = 1; i <= 10000; i++) {
             if (!check[i]) {
-                System.out.println(i);
+                sb.append(i).append('\n');
             }
         }
-    }
 
-    // 생성자 함수
-    public static int d(int n) {
-        int sum = n;
-
-        while (n > 0) {
-            sum += n % 10;
-            n /= 10;
-        }
-
-        return sum;
+        System.out.print(sb);
     }
 }
