@@ -1,17 +1,16 @@
 import java.util.*;
 class Solution {
     public String solution(String s) {
-        List<Integer> list = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
         
-        for(String str: s.split(" ")){
-            list.add(Integer.parseInt(str));
+        String[] sList = s.split(" ");
+        int[] numSList = new int[sList.length];
+        for(int i=0; i<sList.length; i++){
+            numSList[i] = Integer.parseInt(sList[i]);
         }
+        Arrays.sort(numSList);
         
-        Collections.sort(list);
+        return numSList[0]+" "+numSList[sList.length-1];
         
-        sb.append(list.get(0)).append(" ").append(list.get(list.size()-1));
-        
-        return sb.toString();
     }
+        
 }
