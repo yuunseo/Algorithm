@@ -1,49 +1,65 @@
+/*
+Q. 출발지점(1,1)에서 도착지점(N,M)까지 최단거리로 가는 방법
+A. BFS를 이용해서 도착지점에 가는 최단거리 구하기
+*/
 import java.util.*;
+
 class Solution {
+    
+    static int[] dx = {0,0,-1,1};
+    static int[] dy = {-1,1,0,0};
+    
     public int solution(int[][] maps) {
         
-        int n = maps.length; // 게임맵 크기
+        // 변수 초기화
+        int n = maps.length;
         int m = maps[0].length;
-        int answer = -1; // 최단거리
         
-        int[] dx = {0,0,-1,1}; // 이동 배열
-        int[] dy = {-1,1,0,0};
+        // 도착지점이 벽으로 쌓여있으면, return -1
+        int[] end = new int[] {n-1, m-1};
+        boolean isAvailable = false;
+        for(int d=0; d<4; d++){
+            int ny = end[0] + dy[d];
+            int nx = end[1] + dx[d];
+            // 길이 한 군데라도 있으면 통과
+            if(ny<0 || nx<0 || ny>=n || nx>=m) continue;
+            if(maps[ny][nx] == 1) isAvailable = true; 
+        }
         
-        int[][] minArr = new int[n][m];
-        minArr[0][0] = 1; 
+        if(!isAvailable) return -1;
+        
+        
+        // 도착지점에 도달할 수 있으면, 최단거리 찾기
         Queue<int[]> q = new LinkedList<>();
-        q.add(new int[] {0,0});
         boolean[][] visited = new boolean[n][m];
+        // 시작점(0,0)에서 출발
+        q.add(new int[] {0,0,1}); 
         visited[0][0] = true;
         
         while(!q.isEmpty()){
-            int [] cur = q.poll();
-            int y = cur[0];
-            int x = cur[1];
+            int[] cur = q.poll();
             
-            
-            
-            // 종료 조건
-            if(y==n-1 && x==m-1){
-                answer = minArr[y][x];
+            // 도착점이라면 종료
+            if(cur[0] == n-1 && cur[1] == m-1){
+                return cur[2];
             }
             
-            for(int d=0;d<4;d++){
-                int ny = y + dy[d];
-                int nx = x + dx[d];
+            // 시작점에서 갈 수 있는 길 확인하기
+            for(int d=0; d<4; d++){
+                int ny = cur[0] + dy[d];
+                int nx = cur[1] + dx[d];
+                if(ny<0 || ny>=n || nx<0 || nx>=m) continue; 
+                if(maps[ny][nx] == 0) continue;
                 
-                if(ny<0 || nx<0 || nx>=m || ny>=n) continue;
-                
-                if(!visited[ny][nx] && maps[ny][nx] != 0){
-                    q.add(new int[] {ny,nx});
+                // 벽이 아닌 길이라면, 이동
+                if(!visited[ny][nx]){
+                    q.add(new int[] {ny, nx, cur[2]+1});
                     visited[ny][nx] = true;
-                    minArr[ny][nx] = minArr[y][x] + 1;
                 }
             }
-            
         }
         
-        return answer;
+        return -1;
         
     }
 }
