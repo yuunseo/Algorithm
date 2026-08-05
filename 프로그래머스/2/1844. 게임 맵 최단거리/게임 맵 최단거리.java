@@ -15,23 +15,10 @@ class Solution {
         int n = maps.length;
         int m = maps[0].length;
         
-        // 도착지점이 벽으로 쌓여있으면, return -1
-        int[] end = new int[] {n-1, m-1};
-        boolean isAvailable = false;
-        for(int d=0; d<4; d++){
-            int ny = end[0] + dy[d];
-            int nx = end[1] + dx[d];
-            // 길이 한 군데라도 있으면 통과
-            if(ny<0 || nx<0 || ny>=n || nx>=m) continue;
-            if(maps[ny][nx] == 1) isAvailable = true; 
-        }
-        
-        if(!isAvailable) return -1;
-        
-        
         // 도착지점에 도달할 수 있으면, 최단거리 찾기
         Queue<int[]> q = new LinkedList<>();
         boolean[][] visited = new boolean[n][m];
+        
         // 시작점(0,0)에서 출발
         q.add(new int[] {0,0,1}); 
         visited[0][0] = true;
