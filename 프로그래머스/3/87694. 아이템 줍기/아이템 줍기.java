@@ -1,71 +1,76 @@
 /*
-1. 서로 다른 직사각형들의 바깥 둘레 구하기
-2. 캐릭터의 거리 ~ 아이템의 거리 사이 최단 거리 구하기
+1. 직사각형들이 차지하는 칸 구하기 
+2. 테두리만 남겨두고, 내부는 지우기 (2배)
+3. 테두리로만 이동하면서, 최단 경로 찾기
 */
 import java.util.*;
 
 class Solution {
     public int solution(int[][] rectangle, int characterX, int characterY, int itemX, int itemY) {
-        int answer = 0;
         
-        // 이동가능한 테두리 구하기
+        // 변수 2배 초기화
+        int startY = characterY * 2;
+        int startX = characterX * 2;
+        int endY = itemY * 2;
+        int endX = itemX * 2;
+        
+        // 지도
         int[][] map = new int[102][102];
         
-        // 2배 증가해서 그리기 
-        for (int[] rec : rectangle) {
-            int x1 = rec[0] * 2;
-            int y1 = rec[1] * 2;
-            int x2 = rec[2] * 2;
-            int y2 = rec[3] * 2;
-
-            // 전체 채우기
-            for (int y = y1; y <= y2; y++) {
-                for (int x = x1; x <= x2; x++) {
+        // 지도 그리기
+        for(int i=0; i<rectangle.length; i++){
+            int[] rec = rectangle[i];
+            
+            for(int x = rec[0]*2 ; x<=rec[2]*2 ; x++){
+                for(int y = rec[1]*2 ; y<= rec[3]*2; y++){
                     map[y][x] = 1;
                 }
             }
         }
         
-        // 내부 지우기
-        for (int[] rec : rectangle) {
-            int x1 = rec[0] * 2;
-            int y1 = rec[1] * 2;
-            int x2 = rec[2] * 2;
-            int y2 = rec[3] * 2;
-
-            for (int y = y1 + 1; y < y2; y++) {
-                for (int x = x1 + 1; x < x2; x++) {
+        // 테두리만 남기기
+        for(int i=0; i<rectangle.length; i++){
+            int[] rec = rectangle[i];
+            
+            for(int x = rec[0]*2+1; x<rec[2]*2; x++){
+                for(int y = rec[1]*2+1; y< rec[3]*2; y++){
                     map[y][x] = 0;
                 }
             }
         }
         
-        // 캐릭터 ~ 아이템까지 최단 거리 구하기 (BFS)
-        int[] dx = {0,0,-1,1};
-        int[] dy = {-1,1,0,0};
+        // 시작점에서 아이템까지 BFS
         Queue<int[]> q = new LinkedList<>();
         boolean[][] visited = new boolean[102][102];
-        visited[characterY*2][characterX*2] = true;
-        q.add(new int[] {characterX*2, characterY*2,0});
+        
+        int[] dx = {0,0,-1,1};
+        int[] dy = {-1,1,0,0};
+        
+        // 시작점 넣기
+        q.add(new int[] {startY, startX, 0});
+        visited[startY][startX] = true;
+        
         while(!q.isEmpty()){
             int[] cur = q.poll();
             
-            if(cur[0] == itemX*2 && cur[1] == itemY*2){
+            // 종료
+            if(cur[0] == endY && cur[1] == endX){
                 return cur[2]/2;
             }
             
-            for(int d=0;d<4;d++){
-                int ny = cur[1] + dy[d];
-                int nx = cur[0] + dx[d];
-                if(ny<=0 || nx<=0 || ny>=102 || nx>=102) continue;
-                if(!visited[ny][nx] && map[ny][nx] == 1){
-                    visited[ny][nx] = true;
-                    q.add(new int[] {nx, ny, cur[2]+1});
-                }
+            for(int d=0; d<4; d++){
+                int ny = dy[d] + cur[0];
+                int nx = dx[d] + cur[1];
+                
+                if(ny<=0 || nx<=0 || ny>=102 || nx>=102 ||
+                  visited[ny][nx] || map[ny][nx] == 0) continue;
+                
+                q.add(new int[] {ny, nx, cur[2]+1});
+                visited[ny][nx] = true;
             }
-            
         }
         
-        return answer;
+        return 0;
+        
     }
 }
