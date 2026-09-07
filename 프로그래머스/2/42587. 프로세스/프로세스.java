@@ -1,48 +1,51 @@
 /*
-1. priorities의 인덱스 location이 몇 번째로 출력되는지 출력하기
-2. priorities의 인덱스와 우선순위를 함께 묶어서 큐에 담기
-3. (0,2) (1,1) (2,3) (3,2) 
-4. 현재 판단하는 우선순위보다 큰 우선순위가 있는지 알려면 최대 값을 기억하고 있어야됨 -> 맨 처음에는 기억하면 되는데 그 다음 순서부터는 어쩌지? -> 우선 하나 선택해서 모든 값과 비교하기 (최댓값 저장X)
+[아이디어]
+1. Queue를 초기화한다 - O(1)
+2. Queue에 프로세스를 하나씩 넣는다. - O(1)
+3. 하나씩 넣을 때, 최댓값을 갱신해서 기록해둔다. - O(1) --> 2/3번 O(n)
+4. peek() 해서 최댓값인지 확인하고 아니면, 다시 뒤로 간다. 근데 이때 그럼 새로운 최댓값을 모른다!! 그러니 최댓값 저장을 위해 하나의 자료구조를 둔다. PriorityQueue
 */
 import java.util.*;
 
 class Solution {
     public int solution(int[] priorities, int location) {
+     
+        // queue 초기화: O(1)
+        // {value, index}
+        Queue<int[]> q = new ArrayDeque<>();
         
-        // 큐 초기화
-        Queue<int[]> queue = new ArrayDeque<>();
+        // 우선순위 저장을 위한 queue 초기화: O(1)
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        
+        // queue에 넣으면서, 우선순위도 함께 기록
+        // queue에 n개 삽입: O(n)
+        // priority queue에 n개 삽입: O(n)
         for(int i=0; i<priorities.length; i++){
-            queue.add(new int[] {i,priorities[i]});
+            q.offer(new int[] {priorities[i], i});
+            pq.offer(priorities[i]);
         }
         
-        // 하나씩 비교
+        // queue 꺼내서 확인하기: O(n)
         int seq = 1;
-        while(!queue.isEmpty()){
-            int[] cur = queue.poll();
+        while(!q.isEmpty()){
+            int[] cur = q.poll();
             
-            // 나보다 큰 값 있는지 확인
-            boolean moreBigger = false;
-            for(int[] next: queue){
-                if(next[1] > cur[1]){
-                    moreBigger = true;
-                    break;
+            // 젤 높은 우선순위가 아니면, 뒤로 이동
+            if(cur[0] != pq.peek()){
+                q.offer(cur);
+            } // 젤 높은 우선순위면, 제거
+            else{
+                if(cur[1] == location){
+                    return seq;
+                }else{
+                    pq.poll();
+                    seq+=1;
                 }
-            }
-            
-            if(moreBigger){
-                queue.add(cur);
-            }else{
-                // 나보다 큰 값 없으면 출력
-               if(cur[0] == location){
-                   return seq;
-               }else{
-                   seq++;
-                   continue;
-               }
+                
             }
         }
         
-        return seq;
+        return -1;
         
     }
 }
