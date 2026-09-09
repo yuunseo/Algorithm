@@ -1,41 +1,23 @@
 /*
-- 모든 명함을 수납할 수 있는 가장 작은 지갑을 만들기
-1. 회전이 가능하므로 -> 정렬해서 통일시키기 (가로 혹은 세로)
-2. 가로 세로 중 각각 최댓값끼리 곱하여 반환하기
-
-- 시간 복잡고
-1. 정렬 : N
-2. 최댓값 찾기 : N
-즉, N -> 10000 (가능)
+[아이디어]
+1. 하나씩 돌면서 최대/최솟값 갱신하기 - O(N)
+2. 가로 최댓값 길이 * 세로 최댓값 길이 - O(1)
 */
 import java.util.*;
 
 class Solution {
     public int solution(int[][] sizes) {
-        int answer = 0;
-        int max_wid = 0;
-        int max_len = 0;
         
-        // 1. 정렬
-        for(int i=0; i<sizes.length; i++){
-            if (sizes[i][0] < sizes[i][1]){
-                int temp = sizes[i][0];
-                sizes[i][0] = sizes[i][1];
-                sizes[i][1] = temp;
-            }
-            // 2. 최댓값 찾기
-            if(max_wid < sizes[i][0]){
-                max_wid = sizes[i][0];
-            }
-            if(max_len < sizes[i][1]){
-                max_len = sizes[i][1];
-            }
+        int maxWidth = 0;
+        int maxLength = 0;
+        for(int[] size: sizes){
+            int width = Math.max(size[0], size[1]);
+            int length = Math.min(size[0], size[1]);
             
+            maxWidth = Math.max(width, maxWidth);
+            maxLength = Math.max(length, maxLength);
         }
         
-        // 3. 최대 지갑의 크기
-        answer = max_wid * max_len ;
-        
-        return answer;
+        return maxWidth * maxLength;
     }
 }
