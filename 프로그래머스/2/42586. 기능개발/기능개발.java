@@ -1,44 +1,48 @@
-    /*
-    1. 각 작업별 남은 완료도 -> 완료까지 걸리는 시간으로 배열 바꾸기
-    2. 100 - progresses/speeds 값으로 치환 -> 올림한 값
-    3. 이전 작업이 끝났는지 확인해야함 비교가 필요함! 그러므로 자료구조는 staxk
-    4. [7,3,9] -> stack에 넣고 이전 값보다 작으면, cnt +1 이전 값보다 크면 모두 pop
-    5. [5,10,1,1,20,1] -> 1, 3, 2
-    => stack 사용 안 하고, 그냥 나보다 더 큰 값이 나올 때까지 cnt++ 나보다 큰 값 나오면 cnt 출력&초기화
-    */
-    import java.util.*;
-
-    class Solution {
+/*
+[아이디어]
+1. progressess에 들어있는 작업이 끝날 때까지 속도를 내서 배포를 해야 함.
+2. Queue를 사용해서, 현재 가장 먼저 들어온 작업의 완료 일자보다 다음 작업들이 더 일찍 끝났으면 count+1 - O(N)
+*/
+import java.util.*; 
+class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        List<Integer> answer = new ArrayList<>();
-
-        // 남은 작업 기간 배열
-        int[] rest = new int[progresses.length];
+        
+        List<Integer> list = new ArrayList<>();
+        
+        // 작업이 완료됐는지 확인하기 위한 자료구조 큐 q
+        Queue<Integer> q = new ArrayDeque<>();
+        
         for(int i=0; i<progresses.length; i++){
-            rest[i] = (int)Math.ceil((100.0 - progresses[i]) / speeds[i]);
-        }
-
-        int cnt = 1;
-        int cur = rest[0];
-        for(int i=1; i<rest.length; i++){
-            int next = rest[i];
-            
-            if(cur >= next){
-                cnt++;
-            }else{ // cur < next
-                answer.add(cnt);
-                cnt=1;
-                cur = next;
-            }
+            int n = (100 - progresses[i]) / speeds[i];
+            int m = (100 - progresses[i]) % speeds[i];
+            int days = m > 0 ? n+1 : n;
+            q.offer(days);
         }
         
-        answer.add(cnt);
-
-        int[] result = new int[answer.size()];
-        for(int i=0; i<answer.size(); i++){
-            result[i] = answer.get(i);
+        // 모든 작업이 완료될 때까지 반복
+        while(!q.isEmpty()){
+            int cur = q.poll();
+            int next = !q.isEmpty() ? q.peek() : 100;
+            int count = 1;
+            
+            while(cur >= next && !q.isEmpty()){
+                q.poll();
+                count++;
+                if(!q.isEmpty()){
+                    next = q.peek();
+                }                
+            };
+            
+            list.add(count);
+            
         }
-
+        
+        int[] result = new int[list.size()];
+        for(int i=0; i<list.size(); i++){
+            result[i] = list.get(i);
+        }
+        
         return result;
+
     }
 }
