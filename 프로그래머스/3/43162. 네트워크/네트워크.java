@@ -32,27 +32,22 @@ class Solution {
             if(hasNetwork[i]){ // 이미 네트워크에 포함됐으면, 건너뛰기
                 continue;
             }
-            else{
-                hasNetwork[i] = true; // 새로운 네트워크의 출발점
-                answer++;
-                bfs(i, computers, n);
-            }
+            
+            answer++;
+            bfs(i, computers, n);
         }
         
         return answer;
         
     }
     
-    private void bfs(
-        int current, 
-        int[][] computers,
-        int len){
+    private void bfs(int current, int[][] computers, int len){
         
         // 탐색
-        boolean[] isVisited = new boolean[len+1];
         Queue<Integer> q = new ArrayDeque<>();
         q.offer(current);
-        isVisited[current] = true;
+        hasNetwork[current] = true; // 새로운 네트워크의 출발점
+        
         while(!q.isEmpty()){
             int now = q.poll();
             
@@ -60,9 +55,8 @@ class Solution {
             for(int i=0; i<len; i++){
                 if(i == now ||
                   computers[now][i] == 0||
-                  isVisited[i]) continue;
+                  hasNetwork[i]) continue;
                 
-                isVisited[i] = true;
                 hasNetwork[i] = true;
                 q.offer(i);
             }
