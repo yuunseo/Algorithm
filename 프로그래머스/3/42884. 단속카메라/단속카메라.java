@@ -2,23 +2,32 @@ import java.util.*;
 
 class Solution {
     public int solution(int[][] routes) {
-        int answer = 0;
+     
+        // 자료구조 초기화
+        int camera = 0;
+        int start = 0;
+        int end = 0;
+        Arrays.sort(routes, (a, b) ->
+            Integer.compare(a[0], b[0])
+        );
         
-        // 1. 끝나는 지점 기준 정렬
-        Arrays.sort(routes, (a, b) -> a[1] - b[1]);
+        // route에 따라 탐색
+        start = routes[0][0];
+        end = routes[0][1];
+        camera ++;
         
-        // 2. 카메라 위치 (초기값: 매우 작은 값)
-        int camera = Integer.MIN_VALUE;
-        
-        // 3. 순회하면서 카메라 설치
-        for (int[] route : routes) {
-            // 현재 카메라로 못 찍는 경우
-            if (camera < route[0]) {
-                answer++;
-                camera = route[1]; // 해당 차량의 끝 지점에 설치
+        for(int i=1; i<routes.length; i++){
+            int[] current = routes[i];
+            
+            if (current[0] > end) {
+                camera++;
+                end = current[1];
+            } else {
+                end = Math.min(end, current[1]);
             }
         }
         
-        return answer;
+        return camera;
+        
     }
 }
