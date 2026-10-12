@@ -1,32 +1,40 @@
 class Solution {
     public int solution(int n, int[] stations, int w) {
+        // 자료구조 초기화
+        int internet = 2*w +1;
         int answer = 0;
-
-        int prev = 0;
-        int len = 2*w+1;
-        for(int station: stations){
-            int start = station-w;
-            int end = station+w;
+        int start = 1;
+        int end = 1;
+        
+        // 설치된 기지국으로 전파되는 아파트 파악하기
+        for(int i=0; i<stations.length; i++){
+            // 종료 조건
+            if(start > n) break;
             
-            int target = start-prev-1;
-            if(target > 0){
-                int a = target / len;
-                int b = target % len;
-                answer += (b == 0) ? a : a + 1;
+            int part1 = stations[i] - w;
+            int part2 = stations[i] + w;
+            
+            if(end < part1){
+                end = part1-1;
+                answer += (end-start+1) / internet;
+                if((end-start+1) % internet != 0) answer += 1;
             }
             
-            // prev 갱신
-            prev = end;
-        }
-                
-        if(prev < n){
-            int target = n-prev;
-            int a = target/len; // 커버 가능한 길이
-            int b = target%len; //커버 불가능해서 남는 길이
+            // 다음 아파트 구간 구하기
+            start = part2+1;
+            end = part2+1;
             
-            answer += (b==0) ? a : a+1;
         }
-
+        
+        if(end <= n){ // 마지막 아파트에 도착하지 않았으면, 마저 계싼
+            answer += (n-start+1) / internet;
+            if((n-start+1) % internet != 0) answer += 1;
+        }
+        
+        // 결과 반환
         return answer;
+        
+        
+        
     }
 }
