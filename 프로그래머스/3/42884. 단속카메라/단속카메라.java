@@ -2,31 +2,25 @@ import java.util.*;
 
 class Solution {
     public int solution(int[][] routes) {
-     
         // 자료구조 초기화
-        int camera = 0;
-        int start = 0;
-        int end = 0;
-        Arrays.sort(routes, (a, b) ->
-            Integer.compare(a[0], b[0])
-        );
+        int camera = 1;
+        Arrays.sort(routes, (a,b)->{
+            return a[0]-b[0];
+        });
+        int end = routes[0][1];
         
-        // route에 따라 탐색
-        start = routes[0][0];
-        end = routes[0][1];
-        camera ++;
-        
+        // 겹치는 구간 탐색
         for(int i=1; i<routes.length; i++){
-            int[] current = routes[i];
-            
-            if (current[0] > end) {
+            if(end < routes[i][0]){
                 camera++;
-                end = current[1];
-            } else {
-                end = Math.min(end, current[1]);
+                end = routes[i][1];
+            }else if(routes[i][1] <=end){
+                end = routes[i][1];
             }
+            
         }
         
+        // 결과
         return camera;
         
     }
