@@ -4,8 +4,8 @@ class Solution {
         
         long answer = Long.MIN_VALUE;
         
-        long sum1 = 0; // 짝수 +
-        long sum2 = 0; // 짝수 -
+        long sum1 = 0; 
+        long sum2 = 0;
         
         long min1 = 0;
         long min2 = 0;
