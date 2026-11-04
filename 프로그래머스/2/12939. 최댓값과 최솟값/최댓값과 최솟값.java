@@ -2,14 +2,15 @@ import java.util.*;
 class Solution {
     public String solution(String s) {
         
-        String[] sList = s.split(" ");
-        int[] numSList = new int[sList.length];
-        for(int i=0; i<sList.length; i++){
-            numSList[i] = Integer.parseInt(sList[i]);
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for(String str: s.split(" ")){
+            int num = Integer.parseInt(str);
+            min = Math.min(min, num);
+            max = Math.max(max, num);
         }
-        Arrays.sort(numSList);
         
-        return numSList[0]+" "+numSList[sList.length-1];
+        return min+" "+max;
         
     }
         
