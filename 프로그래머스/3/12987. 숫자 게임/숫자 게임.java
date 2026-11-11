@@ -3,10 +3,6 @@ import java.util.*;
 class Solution {
     public int solution(int[] A, int[] B) {
      
-        // 자료구조 초기화
-        // 두 배열을 서로 정렬한 이유는, 다음 숫자와 비교를 위해서
-        // 현재 선택할 때는 가능한 숫자 중 최소를 선택해야 하기 때문에
-        // 즉, 정렬함으로써 최소 숫자를 비교 대상으로 삼기 위해.
         Arrays.sort(A);
         Arrays.sort(B);
         int result = 0;
