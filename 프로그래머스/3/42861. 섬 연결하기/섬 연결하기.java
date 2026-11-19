@@ -4,16 +4,13 @@ class Solution {
     public int solution(int n, int[][] costs) {
         int answer = 0;
         
-        // 간선 기준으로 오름차순 정렬
         Arrays.sort(costs, (a,b)->a[2]-b[2]);
         
-        // 같은 그룹인지 판별하기 위한 배열
         int[] parent = new int[n];
         for(int i=0; i<n; i++){
             parent[i] = i;
         }
         
-        // 최소 간선부터 선택
         int count = 0;
         for(int[] cost: costs){
             int a = cost[0];
