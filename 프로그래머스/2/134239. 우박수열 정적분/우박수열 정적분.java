@@ -3,24 +3,22 @@ import java.util.*;
 class Solution {
     public double[] solution(int k, int[][] ranges) {
         
-        // 1. 콜라츠 수열 계산 및 저장하기(collatzResult)
-        ArrayList<Integer> collatzResult = new ArrayList<>(); // 콜라츠 수열의 결과들 기록
+        ArrayList<Integer> collatzResult = new ArrayList<>(); 
         collatzResult.add(k);
         while(k > 1){
             k = collatz(k);
             collatzResult.add(k);
         }
         
-        // 2. 주어진 범위에 따라 정적분하기
         int collatzCount = collatzResult.size() - 1;
-        ArrayList<Double> integralResult = new ArrayList<>(); // 정적분 결과 담을 배열
+        ArrayList<Double> integralResult = new ArrayList<>(); 
         for(int[] range: ranges){
             int a = range[0];
             int b = range[1];
             
              b = collatzCount + b;
             
-            if(a > b){ // 시작 점이 종료 점보다 크다면, 불가능 (-1로 마무리)
+            if(a > b){ 
                 integralResult.add(-1.0);
                 continue;
             }
